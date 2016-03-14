@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Lab1</string>
+    <string name="save">Riserva</string>
+    <string name="edit">Modificare</string>
+    <string name="action_settings">Regolazioni</string>
+    <string name="name">Nome</string>
+    <string name="mail">Mail@mail.com</string>
+    <string name="bio">Bio</string>
+    <string name="take_picture">Prendere foto</string>
+    <string name="choose_picture">Scegliere foto</string>
+</resources>

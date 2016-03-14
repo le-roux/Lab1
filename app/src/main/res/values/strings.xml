@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Lab1</string>
+    <string name="save">Save</string>
+    <string name="edit">Edit</string>
+    <string name="action_settings">Settings</string>
+    <string name="name">Name</string>
+    <string name="mail">Mail@mail.com</string>
+    <string name="bio">Bio</string>
+    <string name="take_picture">Take picture</string>
+    <string name="choose_picture">Choose picture</string>
+</resources>

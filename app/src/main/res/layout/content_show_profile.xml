@@ -40,7 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/image_size_min"
         android:layout_below="@id/app_name"
-        android:clickable="false"/>
+        android:clickable="false"
+        android:paddingTop="@dimen/padding"/>
 
     <TextView
         android:id="@+id/name"

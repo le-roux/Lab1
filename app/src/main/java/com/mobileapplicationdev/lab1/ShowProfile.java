@@ -1,11 +1,9 @@
 package com.mobileapplicationdev.lab1;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +12,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,9 +33,7 @@ public class ShowProfile extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_show_profile);
 
-        //Restore saved values
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        restoreValues(sharedPreferences);
+        Log.d(TAG, "OnCreate");
 
         //Add OnClick listener on the "Edit" button
         Button switchButton = (Button) findViewById(R.id.switch_button);
@@ -53,37 +48,36 @@ public class ShowProfile extends Activity {
     }//End of onCreate
 
     @Override
-    public void onRestoreInstanceState(Bundle b) {
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart");
+        //Restore saved values
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         restoreValues(sharedPreferences);
     }
 
     public void restoreValues(SharedPreferences sharedPreferences) {
-        Log.d(TAG, "preferences file found");
         String name = sharedPreferences.getString(NAME, null);
         String mail = sharedPreferences.getString(MAIL, null);
         String bio = sharedPreferences.getString(BIO, null);
         String uri = sharedPreferences.getString(IMAGE, null);
-        Log.d(TAG, "preferences file read");
 
         if (name != null) {
             ((TextView) findViewById(R.id.name)).setText(name);
-            ((TextView) findViewById(R.id.name)).setTextColor(getResources().getColor(R.color.grey));
+            ((TextView) findViewById(R.id.name)).setTextColor(getResources().getColor(R.color.black));
         }
         if (mail != null) {
             ((TextView) findViewById(R.id.mail)).setText(mail);
-            ((TextView) findViewById(R.id.mail)).setTextColor(getResources().getColor(R.color.grey));
+            ((TextView) findViewById(R.id.mail)).setTextColor(getResources().getColor(R.color.black));
         }
         if (bio != null) {
             ((TextView) findViewById(R.id.bio)).setText(bio);
-            ((TextView) findViewById(R.id.bio)).setTextColor(getResources().getColor(R.color.grey));
+            ((TextView) findViewById(R.id.bio)).setTextColor(getResources().getColor(R.color.black));
         }
         if (uri != null) {
             fileUri = Uri.parse(uri);
-            Log.d(TAG, "uri parsed = " + fileUri);
             setImage(fileUri);
         }
-        Log.d(TAG, "values set");
     }
 
     private void setImage(Uri uri) {

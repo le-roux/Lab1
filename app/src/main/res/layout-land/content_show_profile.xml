@@ -48,7 +48,9 @@
         android:layout_below="@id/app_name"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/center"
-        android:clickable="false"/>
+        android:layout_alignParentLeft="true"
+        android:clickable="false"
+        android:paddingTop="@dimen/padding"/>
 
 
     <TextView

@@ -37,7 +37,6 @@ public class EditProfile extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "Launching");
         setContentView(R.layout.content_edit_profile);
 
         //Restore saved values
@@ -51,7 +50,6 @@ public class EditProfile extends Activity {
 
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick");
                 fileUri = getOutputMediaFileUri(); //Create a file to store the photo
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); //Set the image file name
                 startActivityForResult(intent, TAKE_PICTURE_REQUEST_CODE); //Launch the camera app
@@ -75,7 +73,6 @@ public class EditProfile extends Activity {
         switchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Saving");
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(NAME, ((EditText)findViewById(R.id.name)).getText().toString());
                 editor.putString(MAIL, ((EditText)findViewById(R.id.mail)).getText().toString());
@@ -87,13 +84,11 @@ public class EditProfile extends Activity {
                 finish();
             }
         });//End of listener
-        Log.d(TAG, "onCreate finished");
     } //End of onCreate
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult");
         if(resultCode == RESULT_OK) {
             Log.d(TAG, "result_ok");
             if (requestCode == CHOOSE_PICTURE_REQUEST_CODE) {
@@ -163,7 +158,6 @@ public class EditProfile extends Activity {
         ((EditText)findViewById(R.id.name)).setText(b.get(NAME).toString());
         ((EditText)findViewById(R.id.mail)).setText(b.get(MAIL).toString());
         ((EditText)findViewById(R.id.bio)).setText(b.get(BIO).toString());
-        Log.d(TAG, "Fields restored");
         Object obj = b.get(IMAGE);
         if (obj != null) {
             fileUri = Uri.parse(obj.toString());
@@ -174,12 +168,10 @@ public class EditProfile extends Activity {
 
     public void restoreValues(SharedPreferences sharedPreferences) {
         //Restore saved values
-        Log.d(TAG, "preferences file found");
         String name = sharedPreferences.getString(NAME, null);
         String mail = sharedPreferences.getString(MAIL, null);
         String bio = sharedPreferences.getString(BIO, null);
         String uri = sharedPreferences.getString(IMAGE, null);
-        Log.d(TAG, "preferences file read");
 
         if (name != null)
             ((EditText)findViewById(R.id.name)).setText(name);
@@ -191,6 +183,5 @@ public class EditProfile extends Activity {
             fileUri = Uri.parse(uri);
             setImage(fileUri);
         }
-        Log.d(TAG, "values set");
     }
 }

@@ -1,6 +1,5 @@
 package com.mobileapplicationdev.lab1;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -10,7 +9,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +25,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class EditProfile extends Activity {
+public class EditProfile extends AppCompatActivity {
 
     private static final String TAG = "Lab1";
     private static final String NAME = "name";
@@ -38,7 +42,8 @@ public class EditProfile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_edit_profile);
-
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         //Restore saved values
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         restoreValues(sharedPreferences);
@@ -67,25 +72,31 @@ public class EditProfile extends Activity {
                 startActivityForResult(choosePictureIntent, CHOOSE_PICTURE_REQUEST_CODE);
             }
         }); //End of listener
-
-        //Add a listener to the "Save" button
-        Button switchButton = (Button) findViewById(R.id.switch_button);
-        switchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(NAME, ((EditText)findViewById(R.id.name)).getText().toString());
-                editor.putString(MAIL, ((EditText)findViewById(R.id.mail)).getText().toString());
-                editor.putString(BIO, ((EditText) findViewById(R.id.bio)).getText().toString());
-                if (fileUri != null)
-                    editor.putString(IMAGE, fileUri.toString());
-                editor.commit();
-                Log.d(TAG, "Saved");
-                finish();
-            }
-        });//End of listener
     } //End of onCreate
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_edit_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if(menuItem.getItemId() == R.id.action_save) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(NAME, ((EditText)findViewById(R.id.name)).getText().toString());
+            editor.putString(MAIL, ((EditText)findViewById(R.id.mail)).getText().toString());
+            editor.putString(BIO, ((EditText) findViewById(R.id.bio)).getText().toString());
+            if (fileUri != null)
+                editor.putString(IMAGE, fileUri.toString());
+            editor.commit();
+            Log.d(TAG, "Saved");
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(menuItem);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

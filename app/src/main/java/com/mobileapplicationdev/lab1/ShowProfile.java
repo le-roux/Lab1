@@ -1,6 +1,5 @@
 package com.mobileapplicationdev.lab1;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -9,15 +8,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
 
-public class ShowProfile extends Activity {
+public class ShowProfile extends AppCompatActivity {
 
     private static final String TAG = "Lab1";
     private static final String NAME = "name";
@@ -32,19 +34,9 @@ public class ShowProfile extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_show_profile);
-
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         Log.d(TAG, "OnCreate");
-
-        //Add OnClick listener on the "Edit" button
-        Button switchButton = (Button) findViewById(R.id.switch_button);
-        switchButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent editIntent = new Intent(getApplicationContext(), EditProfile.class);
-                startActivity(editIntent);
-            }
-        }); //End of the listener
     }//End of onCreate
 
     @Override
@@ -54,6 +46,23 @@ public class ShowProfile extends Activity {
         //Restore saved values
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         restoreValues(sharedPreferences);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_show_profile, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        if(menuItem.getItemId() == R.id.action_edit) {
+            Intent editIntent = new Intent(getApplicationContext(), EditProfile.class);
+            startActivity(editIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(menuItem);
     }
 
     public void restoreValues(SharedPreferences sharedPreferences) {

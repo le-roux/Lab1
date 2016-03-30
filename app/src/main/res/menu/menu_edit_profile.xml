@@ -2,10 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_edit"
+        android:id="@+id/action_save"
         app:showAsAction="ifRoom"
-        android:title="@string/edit"
-        android:icon="@drawable/edit_icon"
+        android:title="@string/save"
+
+        android:icon="@drawable/save_icon"
         />
-        <!-- Icon created by Alexander Smith from Noun Project -->
+        <!-- Icon created by Michal Beno from Noun Project -->
 </menu>
+
